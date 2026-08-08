@@ -5,6 +5,8 @@ export interface InlineEditorConfig {
   effort: string;
   permissionMode: string;
   allowedTools: string;
+  maxInlineFileLines: number;
+  contextWindowLines: number;
 }
 
 const CONFIG_SECTION = "claudeInlineEditor";
@@ -16,5 +18,7 @@ export function getConfig(): InlineEditorConfig {
     effort: config.get<string>("effort", "medium"),
     permissionMode: config.get<string>("permissionMode", "acceptEdits"),
     allowedTools: config.get<string>("allowedTools", "Edit,Read"),
+    maxInlineFileLines: config.get<number>("maxInlineFileLines", 500),
+    contextWindowLines: config.get<number>("contextWindowLines", 150),
   };
 }

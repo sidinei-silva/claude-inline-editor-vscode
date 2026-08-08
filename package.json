@@ -55,6 +55,16 @@
           "type": "string",
           "default": "Edit,Read",
           "description": "Lista de tools permitidas (--allowedTools) para o claude CLI durante a edição inline."
+        },
+        "claudeInlineEditor.maxInlineFileLines": {
+          "type": "number",
+          "default": 500,
+          "description": "Acima desse número de linhas, o arquivo inteiro deixa de ser embutido no prompt — só uma janela ao redor do cursor/seleção é enviada (ver claudeInlineEditor.contextWindowLines). O modelo ainda pode usar a tool Read pra ver o resto se precisar."
+        },
+        "claudeInlineEditor.contextWindowLines": {
+          "type": "number",
+          "default": 150,
+          "description": "Quantidade de linhas antes/depois do cursor ou seleção enviadas no prompt quando o arquivo excede claudeInlineEditor.maxInlineFileLines."
         }
       }
     }

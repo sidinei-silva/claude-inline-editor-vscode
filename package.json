@@ -1,0 +1,47 @@
+{
+  "name": "claude-inline-editor-vscode",
+  "displayName": "Claude Inline Editor",
+  "description": "Edição inline com o Claude Code, no estilo Ctrl+I: peça uma mudança, revise o diff, aceite ou rejeite.",
+  "version": "0.0.1",
+  "private": true,
+  "publisher": "sidinei-silva",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "claudeInlineEditor.invoke",
+        "title": "Claude Inline Editor: Invoke"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "claudeInlineEditor.invoke",
+        "key": "ctrl+i",
+        "mac": "cmd+i",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc --noEmit && node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "package": "npx vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/vscode": "^1.90.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "esbuild": "^0.28.1",
+    "eslint": "^9.0.0",
+    "typescript": "^5.6.0"
+  }
+}

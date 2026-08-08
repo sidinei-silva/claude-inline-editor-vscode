@@ -36,14 +36,17 @@ um painel lateral (sidebar), não um popup ancorado no cursor. Ver
 
 ## Convenções
 
-- Nunca usar `--bare` nem `--permission-mode bypassPermissions` no `cliBridge.ts`
-  quando a Rota C estiver ativa — `bypassPermissions` pula o callback de
-  permissão inteiro (confirmado via string no bundle da extensão oficial),
-  o que pula o `openDiff` também. Ver `context/why-inline-ui-approach.md`.
-- O protocolo da Rota C (`specs/ide-bridge.md`) é reverse-engineered, **não
-  documentado oficialmente** pela Anthropic — qualquer código que dependa
-  dele precisa de fallback gracioso pra Rota B (timeout, versão de lock
-  desconhecida, IDE não conectada).
+- Nunca usar `--bare` nem `--permission-mode bypassPermissions` no
+  `cliBridge.ts` — `bypassPermissions` pula o callback de permissão
+  inteiro (confirmado via string no bundle da extensão oficial), o que
+  também pularia qualquer regra de deny explícita configurada em
+  `allowedTools`/`disallowedTools`. Ver `context/why-inline-ui-approach.md`.
+- Rota C (`specs/ide-bridge.md`) **não é o alvo do v1** — confirmado que
+  `-p`/`--print` é sempre one-shot e nunca aciona o `openDiff` nativo,
+  independente de `--permission-mode`. O protocolo fica documentado (é
+  reverse-engineered, não oficial) só como referência caso a Rota C seja
+  revisitada no futuro via controle de pseudo-terminal. O `cliBridge.ts`
+  atual é 100% baseado em `-p` + `stream-json` (Rota B).
 - Autenticação nunca é gerenciada pela extensão — ela sempre invoca o
   binário `claude` local, que resolve auth sozinho via `claude login`/OAuth.
   Ver `context/why-cli-bridge-not-sdk.md`.

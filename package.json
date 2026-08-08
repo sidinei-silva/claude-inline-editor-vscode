@@ -12,6 +12,9 @@
     "Other"
   ],
   "main": "./dist/extension.js",
+  "activationEvents": [
+    "onCommand:claudeInlineEditor.invoke"
+  ],
   "contributes": {
     "commands": [
       {
@@ -26,7 +29,35 @@
         "mac": "cmd+i",
         "when": "editorTextFocus"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Claude Inline Editor",
+      "properties": {
+        "claudeInlineEditor.model": {
+          "type": "string",
+          "default": "sonnet",
+          "enum": ["sonnet", "opus", "haiku", "fable"],
+          "description": "Modelo padrão passado como --model ao claude CLI."
+        },
+        "claudeInlineEditor.effort": {
+          "type": "string",
+          "default": "medium",
+          "enum": ["low", "medium", "high", "xhigh", "max"],
+          "description": "Nível de esforço padrão passado como --effort ao claude CLI."
+        },
+        "claudeInlineEditor.permissionMode": {
+          "type": "string",
+          "default": "acceptEdits",
+          "enum": ["acceptEdits", "auto", "default", "dontAsk", "plan"],
+          "description": "Permission mode do claude CLI. Nunca usar bypassPermissions aqui — ver context/why-inline-ui-approach.md."
+        },
+        "claudeInlineEditor.allowedTools": {
+          "type": "string",
+          "default": "Edit,Read",
+          "description": "Lista de tools permitidas (--allowedTools) para o claude CLI durante a edição inline."
+        }
+      }
+    }
   },
   "scripts": {
     "compile": "tsc --noEmit && node esbuild.js",
@@ -35,7 +66,11 @@
     "lint": "eslint src",
     "package": "npx vsce package"
   },
+  "dependencies": {
+    "diff": "^5.2.0"
+  },
   "devDependencies": {
+    "@types/diff": "^5.2.3",
     "@types/node": "^24.0.0",
     "@types/vscode": "^1.90.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",

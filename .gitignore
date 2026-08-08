@@ -2,5 +2,7 @@ node_modules/
 out/
 dist/
 *.vsix
+*.tsbuildinfo
 .vscode-test/
 *.log
+.DS_Store
